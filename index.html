@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>NexusCodes · repositório de código</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- VARIÁVEIS & RESET ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      background-image: radial-gradient(circle at 15% 30%, rgba(106, 13, 173, 0.15) 0%, transparent 30%),
+                        radial-gradient(circle at 85% 70%, rgba(138, 43, 226, 0.12) 0%, transparent 35%),
+                        linear-gradient(145deg, #030004 0%, #0a0a0f 100%);
+      font-family: 'Inter', sans-serif;
+      color: #f0eaff;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="60" fill="none"/><path d="M30 5 L55 30 L30 55 L5 30 Z" stroke="rgba(128,0,255,0.08)" stroke-width="0.6" fill="none"/></svg>');
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* SCROLL CUSTOMIZADO roxo/neon */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0b0f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #6a0dad;
+      border-radius: 12px;
+      box-shadow: inset 0 0 6px #c084fc;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9b4dff;
+    }
+
+    /* ----- TIPOGRAFIA & LINKS ----- */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* LAYOUT GERAL */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* ----- NEXUSCODES LOGO (CRIAÇÃO ORIGINAL) ----- */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      position: relative;
+    }
+    .logo-icon {
+      background: linear-gradient(145deg, #c084fc, #4a1d6d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(170, 0, 255, 0.7);
+      font-size: 2.8rem;
+      margin-right: 6px;
+      filter: drop-shadow(0 0 8px #a020f0);
+    }
+    .logo-text {
+      background: linear-gradient(145deg, #f0eaff, #d9b3ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px #8a2be2, 0 0 40px #4b0082;
+      position: relative;
+    }
+    .logo-bracket {
+      color: #b77aef;
+      font-size: 2.5rem;
+      font-weight: 300;
+      text-shadow: 0 0 15px #aa66ff;
+    }
+
+    /* ----- BOTÕES & CARDS NEO BRUTAL / GLASSMORPHISM ----- */
+    .glass-card {
+      background: rgba(15, 5, 25, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(180, 130, 255, 0.25);
+      border-radius: 32px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0 1px rgba(168, 85, 247, 0.1) inset, 0 0 15px rgba(157, 0, 255, 0.3);
+      transition: all 0.25s ease;
+    }
+    .glass-card:hover {
+      border-color: #b77aef;
+      box-shadow: 0 20px 40px rgba(106, 13, 173, 0.5), 0 0 25px #9f4fdf;
+      background: rgba(25, 10, 40, 0.75);
+    }
+
+    .btn-nexus {
+      background: linear-gradient(165deg, #3c096c, #240046);
+      border: 1px solid #b77aef;
+      color: #f1e5ff;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      box-shadow: 0 0 15px rgba(156, 39, 176, 0.4);
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    .btn-nexus:hover {
+      background: #5a189a;
+      border-color: #e0b3ff;
+      box-shadow: 0 0 25px #b200ff;
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+
+    /* ----- SEÇÃO DO CUBO 3D (FOTOS GIRANDO) ----- */
+    .cube-container {
+      perspective: 1200px;
+      width: 240px;
+      height: 240px;
+      margin: 0 auto 50px;
+    }
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotate3d 18s infinite linear;
+      transition: transform 0.1s;
+    }
+    .cube:hover {
+      animation-play-state: paused;
+    }
+    .cube-face {
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border: 3px solid rgba(170, 50, 255, 0.6);
+      box-shadow: 0 0 35px #a55aff inset, 0 0 40px #6a0dad;
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+    .cube-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+      transition: 0.3s;
+    }
+    .cube-face:hover img {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    .front  { transform: rotateY(0deg) translateZ(120px); }
+    .back   { transform: rotateY(180deg) translateZ(120px); }
+    .right  { transform: rotateY(90deg) translateZ(120px); }
+    .left   { transform: rotateY(-90deg) translateZ(120px); }
+    .top    { transform: rotateX(90deg) translateZ(120px); }
+    .bottom { transform: rotateX(-90deg) translateZ(120px); }
+
+    @keyframes rotate3d {
+      0% { transform: rotateX(0deg) rotateY(0deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    /* ----- SEÇÕES DE CÓDIGOS (CATEGORIAS) ----- */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .category-card {
+      background: rgba(8, 0, 16, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid #4a1d6d;
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      transition: 0.2s;
+      box-shadow: 0 8px 0 #2d0040;
+    }
+    .category-card:hover {
+      border-color: #c27eff;
+      box-shadow: 0 0 30px #a142f4, 0 8px 0 #3e065f;
+    }
+    .cat-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #e9d1ff;
+      text-shadow: 0 0 10px #b300ff;
+      border-bottom: 2px solid #8a2be2;
+      padding-bottom: 0.5rem;
+    }
+    .code-snippet {
+      background: #0c0016;
+      border-left: 6px solid #b77aef;
+      border-radius: 16px;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #e0c0ff;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 5px 10px #000;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid #6a0dad;
+    }
+
+    /* ----- SEÇÃO DE MÍDIA (VÍDEO + GIF + 3D) ----- */
+    .media-showcase {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      margin: 4rem 0;
+      align-items: center;
+    }
+    .video-glitch {
+      border: 3px solid #7b2cbf;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 0 45px #4b0082;
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 16/9;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .gif-cyber {
+      border-radius: 20px;
+      box-shadow: 0 0 35px #a642f4;
+      border: 2px solid #a066cc;
+      max-width: 320px;
+      transition: 0.25s;
+    }
+    .gif-cyber:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px #c27eff;
+    }
+
+    /* ROTATING 3D CARD (segundo elemento 3D com fotos) */
+    .flip-3d-container {
+      width: 240px;
+      height: 280px;
+      perspective: 1600px;
+    }
+    .flip-3d {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spinCard 14s infinite ease-in-out alternate;
+    }
+    .flip-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      border: 2px solid #a970e0;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15,0,30,0.8);
+      backdrop-filter: blur(5px);
+    }
+    .flip-front {
+      transform: rotateY(0deg);
+    }
+    .flip-back {
+      transform: rotateY(180deg);
+    }
+    @keyframes spinCard {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(180deg); }
+    }
+
+    /* FOOTER */
+    .footer-nexus {
+      margin-top: 5rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid #6a0dad;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      color: #c7b3ff;
+    }
+
+    /* responsivo */
+    @media (max-width: 800px) {
+      .container { padding: 1rem; }
+      .cube-container { width: 180px; height: 180px; }
+      .cube-face { width: 180px; height: 180px; }
+      .front  { transform: rotateY(0deg) translateZ(90px); }
+      .back   { transform: rotateY(180deg) translateZ(90px); }
+      .right  { transform: rotateY(90deg) translateZ(90px); }
+      .left   { transform: rotateY(-90deg) translateZ(90px); }
+      .top    { transform: rotateX(90deg) translateZ(90px); }
+      .bottom { transform: rotateX(-90deg) translateZ(90px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER COM LOGO NEXUSCODES (CRIADO ORIGINAL) -->
+    <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
+      <div class="logo">
+        <span class="logo-icon"><i class="fas fa-code"></i></span>
+        <span class="logo-bracket">{</span>
+        <span class="logo-text">NexusCodes</span>
+        <span class="logo-bracket">}</span>
+      </div>
+      <nav style="display: flex; gap: 2rem; color: #d0b0ff; font-weight: 500;">
+        <a href="#" style="border-bottom: 2px solid #b77aef;">Início</a>
+        <a href="#">Categorias</a>
+        <a href="#">3D Lab</a>
+        <a href="#">Códigos</a>
+      </nav>
+    </header>
+
+    <!-- INTRO NEXUS + CUBO 3D (FOTOS GIRANDO) -->
+    <section style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 60px;">
+      <span style="background: #2d0a44; padding: 0.4rem 1.8rem; border-radius: 60px; color: #f0d5ff; border: 1px solid #b77aef; margin-bottom: 20px; box-shadow: 0 0 15px purple;">
+        <i class="fas fa-crown" style="color: #ffd966;"></i>  repositório premium
+      </span>
+      <h1 style="font-size: 3.2rem; font-weight: 800; background: linear-gradient(145deg, #f5e6ff, #ca9eff); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 30px #8a2be2; margin-bottom: 0.5rem;">NEXUS<span style="color: #c084fc;">//</span>CODES</h1>
+      <p style="font-size: 1.2rem; color: #d9c0ff; max-width: 700px; margin-bottom: 40px;">
+        <i class="fas fa-bolt" style="color: #bb86fc;"></i> Códigos completos, prontos para IA, jogos, apps e muito mais. Imersão roxo-neon.
+      </p>
+
+      <!-- CUBO 3D PRINCIPAL: 6 FACES COM FOTOS REPRESENTATIVAS -->
+      <div class="cube-container">
+        <div class="cube">
+          <div class="cube-face front"><img src="https://picsum.photos/id/1043/400/400" alt="face1"></div>
+          <div class="cube-face back"><img src="https://picsum.photos/id/119/400/400" alt="face2"></div>
+          <div class="cube-face left"><img src="https://picsum.photos/id/100/400/400" alt="face3"></div>
+          <div class="cube-face right"><img src="https://picsum.photos/id/106/400/400" alt="face4"></div>
+          <div class="cube-face top"><img src="https://picsum.photos/id/1047/400/400" alt="face5"></div>
+          <div class="cube-face bottom"><img src="https://picsum.photos/id/1057/400/400" alt="face6"></div>
+        </div>
+      </div>
+      <span style="margin-top: 12px; color: #b77aef;"><i class="fas fa-sync-alt"></i> 3D rotating cube — pause no hover</span>
+    </section>
+
+    <!-- ========== CATEGORIAS: CÓDIGOS COMPLETOS ========== -->
+    <section style="margin-top: 80px;">
+      <div style="display: flex; gap: 15px; align-items: baseline;">
+        <h2 style="font-size: 2.4rem; font-weight: 700; color: #f3e6ff; text-shadow: 0 0 20px #a959ff;"><i class="fas fa-cubes"></i> CATEGORIAS</h2>
+        <span style="background: #6a0dad; padding: 0.2rem 1.2rem; border-radius: 50px; font-size: 0.9rem;">códigos-fonte completos</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem;" class="category-grid">
+        
+        <!-- CATEGORIA 1: IAs -->
+        <div class="category-card glass-card">
+          <div class="cat-title"><i class="fas fa-brain" style="color: #d4a5ff;"></i> INTELIGÊNCIA ARTIFICIAL</div>
+          <div class="code-snippet">
+            <span style="color:#b77aef;"># Código completo: rede neural PyTorch</span><br>
+            <span>class NexusNet(nn.Module):<br>&nbsp;&nbsp;def __init__(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()<br>&nbsp;&nbsp;&nbsp;&nbsp;self.fc1 = nn.Linear(784,256)<br>&nbsp;&nbsp;def forward(self,x):<br>&nbsp;&nbsp;&nbsp;&nbsp;return self.fc1(x)<br># + checkpoint, treino, inferência</span>
+          </div>
+          <p style="margin: 0.5rem 0; color: #e7d0ff;"><i class="fas fa-check-circle" style="color: #b77aef;"></i> chatbot com transformers / visão</p>
+          <a href="#" class="btn-nexus" style="margin-top: 1rem;"><i class="fas fa-download"></i> obter código</a>
+        </div>
+
+        <!-- CATEGORIA 2: JOGOS -->
+        <div class="category-card glass-card">
+          <div class="cat-title"><i class="fas fa-gamepad" style="color: #d4a5ff;"></i> JOGOS COMPLETOS</div>
+          <div class="code-snippet">
+            <span style="color:#b77aef;">// jogo plataforma JS (canvas)</span><br>
+            <span>class Player {<br>&nbsp;&nbsp;constructor(x,y){<br>&nbsp;&nbsp;&nbsp;&nbsp;this.x=x; this.y=y; }<br>&nbsp;&nbsp;update() { /* gravidade */ }<br>}<br>// fases, inimigos, colisão, power-ups</span>
+          </div>
+          <p style="margin: 0.5rem 0; color: #e7d0ff;"><i class="fas fa-check-circle"></i> Phaser 3 / Unity C# + assets</p>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> obter código</a>
+        </div>
+
+        <!-- CATEGORIA 3: APLICATIVOS -->
+        <div class="category-card glass-card">
+          <div class="cat-title"><i class="fas fa-mobile-alt" style="color: #d4a5ff;"></i> APLICATIVOS</div>
+          <div class="code-snippet">
+            <span style="color:#b77aef;">// React Native + Expo </span><br>
+            <span>export default function App(){<br>&nbsp;&nbsp;const [data,setData]=useState(null)<br>&nbsp;&nbsp;useEffect(()=>{fetchAPI()},[])<br>&nbsp;&nbsp;return ( &lt;View&gt;...&lt;/View&gt; )}</span>
+          </div>
+          <p style="margin: 0.5rem 0; color: #e7d0ff;"><i class="fas fa-check-circle"></i> apps de produtividade, e-commerce</p>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> obter código</a>
+        </div>
+      </div>
+
+      <!-- SEGUNDA FILEIRA: + CATEGORIAS (BACKEND, SCRIPTS) -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2.5rem;">
+        <div class="category-card glass-card">
+          <div class="cat-title"><i class="fas fa-database"></i> BACKEND & API</div>
+          <div class="code-snippet">
+            <span># API RESTful (Flask)<br>@app.route('/nexus')<br>def nexus():<br>&nbsp;&nbsp;return jsonify({'codes':42})<br># autenticação JWT + SQLAlchemy</span>
+          </div>
+          <a href="#" class="btn-nexus" style="margin-top: 1rem;">código completo</a>
+        </div>
+        <div class="category-card glass-card">
+          <div class="cat-title"><i class="fas fa-robot"></i> AUTOMAÇÃO</div>
+          <div class="code-snippet">
+            <span># python: bot de tarefas<br>import pyautogui<br>import schedule<br>def job():<br>&nbsp;&nbsp;pyautogui.write('Nexus')<br>schedule.every().day.at("10:00").do(job)</span>
+          </div>
+          <a href="#" class="btn-nexus">código completo</a>
+        </div>
+        <div class="category-card glass-card">
+          <div class="cat-title"><i class="fas fa-vr-cardboard"></i> AR/VR</div>
+          <div class="code-snippet">
+            <span>// A-Frame / Three.js<br>AFRAME.registerComponent('nexus-3d',{<br>&nbsp;&nbsp;init:function(){<br>&nbsp;&nbsp;&nbsp;&nbsp;this.el.setAttribute('color','#8a2be2')}})</span>
+          </div>
+          <a href="#" class="btn-nexus">código completo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO HIPER-MÍDIA: VÍDEO, GIF, FOTOS 3D ========== -->
+    <section style="margin-top: 6rem;">
+      <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 3rem; text-shadow: 0 0 16px #a44eff;">
+        <i class="fas fa-camera-retro"></i> LAB 3D •  VÍDEOS & GIFS
+      </h2>
+
+      <div class="media-showcase">
+        <!-- VÍDEO EMBUTIDO (YOUTUBE - coding futuristico) -->
+        <div class="video-glitch">
+          <iframe src="https://www.youtube.com/embed/Bt0oSzj8Q8U?autoplay=1&mute=1&loop=1&playlist=Bt0oSzj8Q8U&controls=0&showinfo=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+
+        <!-- GIF ANIMADO (CYBERPUNK / CÓDIGO) -->
+        <div>
+          <img class="gif-cyber" src="https://media3.giphy.com/media/l0MYt5jH6gkTWm8qo/giphy.gif?cid=ecf05e473y7dk2py2dwf5u5wy6f62me2vsvsj9lsk6zlwts9&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="hacking gif" style="width: 100%; max-width: 380px;">
+          <p style="text-align: center; color: #b77aef; margin-top: 8px;"><i class="fas fa-film"></i> GIF animado · código em ação</p>
+        </div>
+
+        <!-- SEGUNDO ELEMENTO 3D: FOTO GIRATÓRIA (FLIP CARD 3D) -->
+        <div class="flip-3d-container">
+          <div class="flip-3d">
+            <div class="flip-face flip-front">
+              <img src="https://picsum.photos/id/1045/300/300" alt="3d flip front" style="width:100%; height:100%; object-fit: cover; border-radius: 28px;">
+            </div>
+            <div class="flip-face flip-back" style="background: #1a0b2e; border: 3px solid #b77aef; flex-direction: column; color: white;">
+              <i class="fas fa-crown" style="font-size: 3rem; color: #ffb703;"></i>
+              <h3 style="margin-top: 1rem;">NexusCode</h3>
+              <p style="padding: 0 1rem;">biblioteca infinita</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIS UMA AMOSTRA: CÓDIGO AO VIVO (SIMULAÇÃO) -->
+    <section style="margin-top: 5rem; background: rgba(48, 9, 70, 0.4); border-radius: 48px; padding: 2.5rem; border: 1px solid #9a4dff; box-shadow: 0 0 70px #3c096c;">
+      <div style="display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;">
+        <div style="flex:1;">
+          <h3 style="font-size: 2rem; "><span style="color: #e5c3ff;">⟦ NEXUS AI SNIPPET ⟧</span></h3>
+          <div style="background: #080012; padding: 1.8rem; border-radius: 24px; border: 1px solid #bf79ff; margin-top: 1rem;">
+            <pre style="color: #f0d5ff; font-size: 0.9rem; font-family: monospace;">
+# CÓDIGO COMPLETO PARA IA GENERATIVA
+from transformers import pipeline
+gerador = pipeline('text-generation', model='gpt2')
+output = gerador("NexusCodes cria", max_length=50)
+print(output)</pre>
+          </div>
+        </div>
+        <div style="flex:1; text-align: center;">
+          <i class="fas fa-microchip" style="font-size: 5rem; color: #b77aef; text-shadow: 0 0 20px;"></i>
+          <p style="color: #d6b3ff;">mais de 1500 códigos disponíveis</p>
+          <div style="display: flex; gap: 1rem; justify-content: center;">
+            <span style="background: #4b0082; padding: 0.6rem 1.5rem; border-radius: 40px;">IA</span>
+            <span style="background: #4b0082; padding: 0.6rem 1.5rem; border-radius: 40px;">Games</span>
+            <span style="background: #4b0082; padding: 0.6rem 1.5rem; border-radius: 40px;">Apps</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER NEXUS -->
+    <footer class="footer-nexus">
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 1.8rem; font-weight: 800; display: flex; gap: 5px;">
+          <span style="color: #b77aef;">{NexusCodes}</span>
+        </span>
+        <span style="color: #c69aff; margin-top: 8px;">© 2025 · códigos prontos, poder roxo</span>
+      </div>
+      <div style="display: flex; gap: 2rem; color: #e7d0ff;">
+        <span><i class="fab fa-github"></i> NexusCodes</span>
+        <span><i class="fab fa-discord"></i> /nexuslab</span>
+        <span><i class="fas fa-cube"></i> 3D infinite</span>
+      </div>
+    </footer>
+
+    <!-- ASSINATURA ESTÉTICA -->
+    <div style="text-align: center; margin-top: 2rem; opacity: 0.6; font-size: 0.8rem; letter-spacing: 3px; color: #a56bc0;">
+      <i class="fas fa-bolt"></i>   ROTATING 3D PHOTOS · VÍDEO · GIFs   <i class="fas fa-bolt"></i>
+    </div>
+  </div> <!-- fim container -->
+
+  <!-- PEQUENO SCRIPT PARA EFEITOS EXTRAS (GLITCH, ETC) -->
+  <script>
+    // efeito sutil de brilho no logo e rotação extra - puramente cosmético
+    (function() {
+      const logos = document.querySelectorAll('.logo-text, .logo-icon');
+      setInterval(() => {
+        logos.forEach(el => {
+          el.style.textShadow = '0 0 25px #c967ff, 0 0 45px #6a0dad';
+        });
+      }, 800);
+      setTimeout(() => {
+        logos.forEach(el => el.style.textShadow = '0 0 20px #8a2be2, 0 0 40px #4b0082');
+      }, 200);
+    })();
+
+    // pausar rotação do cubo ao passar o mouse, já feito no css, mas vamos deixar dinâmico.
+    console.log('NexusCodes · 3D roxo ativo');
+  </script>
+  <!-- Créditos das imagens: Picsum, Giphy, YouTube -->
+</body>
+</html>
