@@ -131,15 +131,16 @@
       background: linear-gradient(165deg, #3c096c, #240046);
       border: 1px solid #b77aef;
       color: #f1e5ff;
-      padding: 0.8rem 2rem;
+      padding: 0.6rem 1.5rem;
       border-radius: 50px;
       font-weight: 600;
       letter-spacing: 1.5px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       transition: 0.2s;
       box-shadow: 0 0 15px rgba(156, 39, 176, 0.4);
       display: inline-block;
       text-transform: uppercase;
+      margin-top: 0.8rem;
     }
     .btn-nexus:hover {
       background: #5a189a;
@@ -152,9 +153,9 @@
     /* ----- SEÇÃO DO CUBO 3D (FOTOS GIRANDO) ----- */
     .cube-container {
       perspective: 1200px;
-      width: 240px;
-      height: 240px;
-      margin: 0 auto 50px;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 30px;
     }
     .cube {
       width: 100%;
@@ -169,8 +170,8 @@
     }
     .cube-face {
       position: absolute;
-      width: 240px;
-      height: 240px;
+      width: 200px;
+      height: 200px;
       border: 3px solid rgba(170, 50, 255, 0.6);
       box-shadow: 0 0 35px #a55aff inset, 0 0 40px #6a0dad;
       border-radius: 16px;
@@ -188,12 +189,12 @@
       transform: scale(1.1);
       opacity: 1;
     }
-    .front  { transform: rotateY(0deg) translateZ(120px); }
-    .back   { transform: rotateY(180deg) translateZ(120px); }
-    .right  { transform: rotateY(90deg) translateZ(120px); }
-    .left   { transform: rotateY(-90deg) translateZ(120px); }
-    .top    { transform: rotateX(90deg) translateZ(120px); }
-    .bottom { transform: rotateX(-90deg) translateZ(120px); }
+    .front  { transform: rotateY(0deg) translateZ(100px); }
+    .back   { transform: rotateY(180deg) translateZ(100px); }
+    .right  { transform: rotateY(90deg) translateZ(100px); }
+    .left   { transform: rotateY(-90deg) translateZ(100px); }
+    .top    { transform: rotateX(90deg) translateZ(100px); }
+    .bottom { transform: rotateX(-90deg) translateZ(100px); }
 
     @keyframes rotate3d {
       0% { transform: rotateX(0deg) rotateY(0deg); }
@@ -203,7 +204,7 @@
     /* ----- SEÇÕES DE CÓDIGOS (CATEGORIAS) ----- */
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
       margin-top: 2rem;
     }
@@ -215,6 +216,8 @@
       padding: 1.8rem 1.5rem;
       transition: 0.2s;
       box-shadow: 0 8px 0 #2d0040;
+      display: flex;
+      flex-direction: column;
     }
     .category-card:hover {
       border-color: #c27eff;
@@ -224,9 +227,9 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 700;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       color: #e9d1ff;
       text-shadow: 0 0 10px #b300ff;
       border-bottom: 2px solid #8a2be2;
@@ -236,87 +239,33 @@
       background: #0c0016;
       border-left: 6px solid #b77aef;
       border-radius: 16px;
-      padding: 1rem;
-      margin: 1rem 0;
+      padding: 0.8rem;
+      margin: 0.6rem 0;
       font-family: 'Courier New', monospace;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #e0c0ff;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 5px 10px #000;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 2px 8px #000;
       white-space: pre-wrap;
       word-break: break-word;
       border: 1px solid #6a0dad;
+      line-height: 1.4;
     }
-
-    /* ----- SEÇÃO DE MÍDIA (VÍDEO + GIF + 3D) ----- */
-    .media-showcase {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 3rem;
-      margin: 4rem 0;
-      align-items: center;
+    .snippet-list {
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: #b77aef #1a0033;
     }
-    .video-glitch {
-      border: 3px solid #7b2cbf;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 0 45px #4b0082;
-      width: 100%;
-      max-width: 480px;
-      aspect-ratio: 16/9;
+    .snippet-list::-webkit-scrollbar {
+      width: 5px;
     }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    .snippet-list::-webkit-scrollbar-track {
+      background: #1a0033;
     }
-    .gif-cyber {
-      border-radius: 20px;
-      box-shadow: 0 0 35px #a642f4;
-      border: 2px solid #a066cc;
-      max-width: 320px;
-      transition: 0.25s;
-    }
-    .gif-cyber:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 60px #c27eff;
-    }
-
-    /* ROTATING 3D CARD (segundo elemento 3D com fotos) */
-    .flip-3d-container {
-      width: 240px;
-      height: 280px;
-      perspective: 1600px;
-    }
-    .flip-3d {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: spinCard 14s infinite ease-in-out alternate;
-    }
-    .flip-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 28px;
-      border: 2px solid #a970e0;
-      backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(15,0,30,0.8);
-      backdrop-filter: blur(5px);
-    }
-    .flip-front {
-      transform: rotateY(0deg);
-    }
-    .flip-back {
-      transform: rotateY(180deg);
-    }
-    @keyframes spinCard {
-      0% { transform: rotateY(0deg); }
-      100% { transform: rotateY(180deg); }
+    .snippet-list::-webkit-scrollbar-thumb {
+      background: #b77aef;
+      border-radius: 10px;
     }
 
     /* FOOTER */
@@ -333,21 +282,21 @@
     /* responsivo */
     @media (max-width: 800px) {
       .container { padding: 1rem; }
-      .cube-container { width: 180px; height: 180px; }
-      .cube-face { width: 180px; height: 180px; }
-      .front  { transform: rotateY(0deg) translateZ(90px); }
-      .back   { transform: rotateY(180deg) translateZ(90px); }
-      .right  { transform: rotateY(90deg) translateZ(90px); }
-      .left   { transform: rotateY(-90deg) translateZ(90px); }
-      .top    { transform: rotateX(90deg) translateZ(90px); }
-      .bottom { transform: rotateX(-90deg) translateZ(90px); }
+      .cube-container { width: 160px; height: 160px; }
+      .cube-face { width: 160px; height: 160px; }
+      .front  { transform: rotateY(0deg) translateZ(80px); }
+      .back   { transform: rotateY(180deg) translateZ(80px); }
+      .right  { transform: rotateY(90deg) translateZ(80px); }
+      .left   { transform: rotateY(-90deg) translateZ(80px); }
+      .top    { transform: rotateX(90deg) translateZ(80px); }
+      .bottom { transform: rotateX(-90deg) translateZ(80px); }
     }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- HEADER COM LOGO NEXUSCODES (CRIADO ORIGINAL) -->
+    <!-- HEADER COM LOGO NEXUSCODES -->
     <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
       <div class="logo">
         <span class="logo-icon"><i class="fas fa-code"></i></span>
@@ -358,154 +307,151 @@
       <nav style="display: flex; gap: 2rem; color: #d0b0ff; font-weight: 500;">
         <a href="#" style="border-bottom: 2px solid #b77aef;">Início</a>
         <a href="#">Categorias</a>
-        <a href="#">3D Lab</a>
         <a href="#">Códigos</a>
+        <a href="#">Contato</a>
       </nav>
     </header>
 
     <!-- INTRO NEXUS + CUBO 3D (FOTOS GIRANDO) -->
-    <section style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 60px;">
+    <section style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
       <span style="background: #2d0a44; padding: 0.4rem 1.8rem; border-radius: 60px; color: #f0d5ff; border: 1px solid #b77aef; margin-bottom: 20px; box-shadow: 0 0 15px purple;">
         <i class="fas fa-crown" style="color: #ffd966;"></i>  repositório premium
       </span>
       <h1 style="font-size: 3.2rem; font-weight: 800; background: linear-gradient(145deg, #f5e6ff, #ca9eff); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 30px #8a2be2; margin-bottom: 0.5rem;">NEXUS<span style="color: #c084fc;">//</span>CODES</h1>
-      <p style="font-size: 1.2rem; color: #d9c0ff; max-width: 700px; margin-bottom: 40px;">
-        <i class="fas fa-bolt" style="color: #bb86fc;"></i> Códigos completos, prontos para IA, jogos, apps e muito mais. Imersão roxo-neon.
+      <p style="font-size: 1.2rem; color: #d9c0ff; max-width: 700px; margin-bottom: 30px;">
+        <i class="fas fa-bolt" style="color: #bb86fc;"></i> Mais de 30 códigos completos e funcionais para IA, jogos, apps e muito mais.
       </p>
 
-      <!-- CUBO 3D PRINCIPAL: 6 FACES COM FOTOS REPRESENTATIVAS -->
+      <!-- CUBO 3D PRINCIPAL: 6 FACES COM FOTOS -->
       <div class="cube-container">
         <div class="cube">
-          <div class="cube-face front"><img src="https://picsum.photos/id/1043/400/400" alt="face1"></div>
-          <div class="cube-face back"><img src="https://picsum.photos/id/119/400/400" alt="face2"></div>
-          <div class="cube-face left"><img src="https://picsum.photos/id/100/400/400" alt="face3"></div>
-          <div class="cube-face right"><img src="https://picsum.photos/id/106/400/400" alt="face4"></div>
-          <div class="cube-face top"><img src="https://picsum.photos/id/1047/400/400" alt="face5"></div>
-          <div class="cube-face bottom"><img src="https://picsum.photos/id/1057/400/400" alt="face6"></div>
+          <div class="cube-face front"><img src="https://picsum.photos/id/1043/300/300" alt="face1"></div>
+          <div class="cube-face back"><img src="https://picsum.photos/id/119/300/300" alt="face2"></div>
+          <div class="cube-face left"><img src="https://picsum.photos/id/100/300/300" alt="face3"></div>
+          <div class="cube-face right"><img src="https://picsum.photos/id/106/300/300" alt="face4"></div>
+          <div class="cube-face top"><img src="https://picsum.photos/id/1047/300/300" alt="face5"></div>
+          <div class="cube-face bottom"><img src="https://picsum.photos/id/1057/300/300" alt="face6"></div>
         </div>
       </div>
-      <span style="margin-top: 12px; color: #b77aef;"><i class="fas fa-sync-alt"></i> 3D rotating cube — pause no hover</span>
+      <span style="margin-top: 8px; color: #b77aef;"><i class="fas fa-sync-alt"></i> 3D rotating cube — pause no hover</span>
     </section>
 
-    <!-- ========== CATEGORIAS: CÓDIGOS COMPLETOS ========== -->
-    <section style="margin-top: 80px;">
-      <div style="display: flex; gap: 15px; align-items: baseline;">
+    <!-- ========== CATEGORIAS COM 36 CÓDIGOS FUNCIONAIS ========== -->
+    <section style="margin-top: 60px;">
+      <div style="display: flex; gap: 15px; align-items: baseline; margin-bottom: 30px;">
         <h2 style="font-size: 2.4rem; font-weight: 700; color: #f3e6ff; text-shadow: 0 0 20px #a959ff;"><i class="fas fa-cubes"></i> CATEGORIAS</h2>
-        <span style="background: #6a0dad; padding: 0.2rem 1.2rem; border-radius: 50px; font-size: 0.9rem;">códigos-fonte completos</span>
+        <span style="background: #6a0dad; padding: 0.2rem 1.2rem; border-radius: 50px; font-size: 0.9rem;">36 códigos prontos</span>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem;" class="category-grid">
+
+      <!-- GRADE DE CATEGORIAS (6 CARDS, CADA UM COM 6 SNIPPETS = 36) -->
+      <div class="category-grid">
         
-        <!-- CATEGORIA 1: IAs -->
+        <!-- CARD 1: IA (6 códigos) -->
         <div class="category-card glass-card">
           <div class="cat-title"><i class="fas fa-brain" style="color: #d4a5ff;"></i> INTELIGÊNCIA ARTIFICIAL</div>
-          <div class="code-snippet">
-            <span style="color:#b77aef;"># Código completo: rede neural PyTorch</span><br>
-            <span>class NexusNet(nn.Module):<br>&nbsp;&nbsp;def __init__(self):<br>&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()<br>&nbsp;&nbsp;&nbsp;&nbsp;self.fc1 = nn.Linear(784,256)<br>&nbsp;&nbsp;def forward(self,x):<br>&nbsp;&nbsp;&nbsp;&nbsp;return self.fc1(x)<br># + checkpoint, treino, inferência</span>
+          <div class="snippet-list">
+            <div class="code-snippet"><span style="color:#b77aef;"># Rede neural PyTorch</span><br>class NexusNet(nn.Module):<br>  def __init__(self):<br>    super().__init__()<br>    self.fc1 = nn.Linear(784,256)<br>    self.fc2 = nn.Linear(256,10)<br>  def forward(self,x):<br>    x = torch.relu(self.fc1(x))<br>    return self.fc2(x)</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Treinamento com loop</span><br>for epoch in range(10):<br>  for data, target in loader:<br>    opt.zero_grad()<br>    loss = criterion(model(data), target)<br>    loss.backward(); opt.step()</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Chatbot com transformers</span><br>from transformers import pipeline<br>chat = pipeline('conversational', model='microsoft/DialoGPT-medium')<br>reply = chat("Olá, NexusCodes")</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Classificação de imagens</span><br>model = resnet18(pretrained=True)<br>model.eval()<br>with torch.no_grad():<br>  pred = model(img_tensor).argmax()</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Regressão linear sklearn</span><br>from sklearn.linear_model import LinearRegression<br>model = LinearRegression()<br>model.fit(X_train, y_train)<br>y_pred = model.predict(X_test)</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Clusterização KMeans</span><br>from sklearn.cluster import KMeans<br>kmeans = KMeans(n_clusters=3)<br>kmeans.fit(X)<br>labels = kmeans.labels_</div>
           </div>
-          <p style="margin: 0.5rem 0; color: #e7d0ff;"><i class="fas fa-check-circle" style="color: #b77aef;"></i> chatbot com transformers / visão</p>
-          <a href="#" class="btn-nexus" style="margin-top: 1rem;"><i class="fas fa-download"></i> obter código</a>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> ver todos (12+ códigos)</a>
         </div>
 
-        <!-- CATEGORIA 2: JOGOS -->
+        <!-- CARD 2: JOGOS (6 códigos) -->
         <div class="category-card glass-card">
           <div class="cat-title"><i class="fas fa-gamepad" style="color: #d4a5ff;"></i> JOGOS COMPLETOS</div>
-          <div class="code-snippet">
-            <span style="color:#b77aef;">// jogo plataforma JS (canvas)</span><br>
-            <span>class Player {<br>&nbsp;&nbsp;constructor(x,y){<br>&nbsp;&nbsp;&nbsp;&nbsp;this.x=x; this.y=y; }<br>&nbsp;&nbsp;update() { /* gravidade */ }<br>}<br>// fases, inimigos, colisão, power-ups</span>
+          <div class="snippet-list">
+            <div class="code-snippet"><span style="color:#b77aef;">// Player plataforma (canvas)</span><br>class Player {<br>  constructor(x,y){ this.x=x; this.y=y; }<br>  update() { this.y += this.vy; }<br>  jump() { this.vy = -12; }<br>}</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Detecção de colisão</span><br>function collide(r1, r2) {<br>  return !(r2.x > r1.x+r1.w || r2.x+r2.w < r1.x ||<br>           r2.y > r1.y+r1.h || r2.y+r2.h < r1.y);<br>}</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Fase com tilemap (Phaser)</span><br>this.map = this.make.tilemap({ key:'map' });<br>const tileset = this.map.addTilesetImage('tiles');<br>this.map.createLayer('ground', tileset);</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Controle de animação</span><br>this.anims.create({<br>  key: 'run', frames: this.anims.generateFrameNumbers('player', {start:0,end:3}), frameRate:10, repeat:-1<br>});</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Spawn de inimigos</span><br>function spawnEnemy() {<br>  enemies.push(new Enemy(Math.random()*800,0));<br>} setInterval(spawnEnemy, 2000);</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Sistema de pontuação</span><br>let score = 0;<br>function collectCoin() { score += 10; updateScore(); }</div>
           </div>
-          <p style="margin: 0.5rem 0; color: #e7d0ff;"><i class="fas fa-check-circle"></i> Phaser 3 / Unity C# + assets</p>
-          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> obter código</a>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> ver todos (10+ códigos)</a>
         </div>
 
-        <!-- CATEGORIA 3: APLICATIVOS -->
+        <!-- CARD 3: APLICATIVOS (6 códigos) -->
         <div class="category-card glass-card">
           <div class="cat-title"><i class="fas fa-mobile-alt" style="color: #d4a5ff;"></i> APLICATIVOS</div>
-          <div class="code-snippet">
-            <span style="color:#b77aef;">// React Native + Expo </span><br>
-            <span>export default function App(){<br>&nbsp;&nbsp;const [data,setData]=useState(null)<br>&nbsp;&nbsp;useEffect(()=>{fetchAPI()},[])<br>&nbsp;&nbsp;return ( &lt;View&gt;...&lt;/View&gt; )}</span>
+          <div class="snippet-list">
+            <div class="code-snippet"><span style="color:#b77aef;">// React Native component</span><br>export default function App() {<br>  const [data, setData] = useState(null);<br>  useEffect(() => { fetch('api').then(setData); }, []);<br>  return &lt;View&gt;&lt;Text&gt;{data}&lt;/Text&gt;&lt;/View&gt;;<br>}</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Redux slice</span><br>const userSlice = createSlice({<br>  name: 'user', initialState: {},<br>  reducers: { setUser: (state, action) => action.payload }<br>});</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// SQLite (React Native)</span><br>const db = SQLite.openDatabase('test.db');<br>db.transaction(tx => tx.executeSql('CREATE TABLE items (id, name)'));</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Navegação com React Navigation</span><br>&lt;NavigationContainer&gt;<br>  &lt;Stack.Navigator&gt;&lt;Stack.Screen name="Home" component={Home} /&gt;&lt;/Stack.Navigator&gt;<br>&lt;/NavigationContainer&gt;</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Consumindo API (fetch)</span><br>const loadData = async () => {<br>  const res = await fetch('https://api.nexus.com');<br>  setData(await res.json());<br>};</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// AsyncStorage</span><br>await AsyncStorage.setItem('user', JSON.stringify(user));<br>const user = JSON.parse(await AsyncStorage.getItem('user'));</div>
           </div>
-          <p style="margin: 0.5rem 0; color: #e7d0ff;"><i class="fas fa-check-circle"></i> apps de produtividade, e-commerce</p>
-          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> obter código</a>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> ver todos (8+ códigos)</a>
         </div>
-      </div>
 
-      <!-- SEGUNDA FILEIRA: + CATEGORIAS (BACKEND, SCRIPTS) -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2.5rem;">
+        <!-- CARD 4: BACKEND & API (6 códigos) -->
         <div class="category-card glass-card">
           <div class="cat-title"><i class="fas fa-database"></i> BACKEND & API</div>
-          <div class="code-snippet">
-            <span># API RESTful (Flask)<br>@app.route('/nexus')<br>def nexus():<br>&nbsp;&nbsp;return jsonify({'codes':42})<br># autenticação JWT + SQLAlchemy</span>
+          <div class="snippet-list">
+            <div class="code-snippet"><span style="color:#b77aef;"># API RESTful (Flask)</span><br>@app.route('/nexus')<br>def nexus(): return jsonify({'codes':42})<br>if __name__ == '__main__': app.run()</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># JWT authentication</span><br>token = jwt.encode({'user': user}, SECRET, algorithm='HS256')<br>decoded = jwt.decode(token, SECRET, algorithms=['HS256'])</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Node.js + Express</span><br>app.get('/api', (req, res) => {<br>  res.json({ message: 'Nexus' });<br>});</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># SQLAlchemy model</span><br>class User(db.Model):<br>  id = db.Column(db.Integer, primary_key)<br>  name = db.Column(db.String(80))</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># FastAPI endpoint</span><br>@app.get("/items/{id}")<br>async def read_item(id: int): return {"id": id}</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// GraphQL schema</span><br>type Query { codes: [Code] }<br>type Code { id: ID!, language: String }</div>
           </div>
-          <a href="#" class="btn-nexus" style="margin-top: 1rem;">código completo</a>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> ver todos (9+ códigos)</a>
         </div>
+
+        <!-- CARD 5: AUTOMAÇÃO (6 códigos) -->
         <div class="category-card glass-card">
           <div class="cat-title"><i class="fas fa-robot"></i> AUTOMAÇÃO</div>
-          <div class="code-snippet">
-            <span># python: bot de tarefas<br>import pyautogui<br>import schedule<br>def job():<br>&nbsp;&nbsp;pyautogui.write('Nexus')<br>schedule.every().day.at("10:00").do(job)</span>
+          <div class="snippet-list">
+            <div class="code-snippet"><span style="color:#b77aef;"># Python bot com pyautogui</span><br>import pyautogui, schedule<br>def job(): pyautogui.write('Nexus')<br>schedule.every().day.at("10:00").do(job)</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Web scraping com BS4</span><br>response = requests.get(url)<br>soup = BeautifulSoup(response.text, 'html.parser')<br>links = soup.find_all('a')</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Selenium automação</span><br>driver = webdriver.Chrome()<br>driver.get('https://nexus.com')<br>element = driver.find_element(By.ID, 'search')<br>element.send_keys('códigos')</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Renomear arquivos em lote</span><br>import os<br>for f in os.listdir('.'):<br>  if f.endswith('.txt'): os.rename(f, f'backup_{f}')</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Envio de e-mail automático</span><br>import smtplib<br>server = smtplib.SMTP('smtp.gmail.com', 587)<br>server.login('user', 'pass')<br>server.sendmail('from', 'to', 'mensagem')</div>
+            <div class="code-snippet"><span style="color:#b77aef;"># Agendador (schedule)</span><br>schedule.every(10).minutes.do(job)<br>while True: schedule.run_pending(); time.sleep(1)</div>
           </div>
-          <a href="#" class="btn-nexus">código completo</a>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> ver todos (7+ códigos)</a>
         </div>
+
+        <!-- CARD 6: AR/VR (6 códigos) -->
         <div class="category-card glass-card">
-          <div class="cat-title"><i class="fas fa-vr-cardboard"></i> AR/VR</div>
-          <div class="code-snippet">
-            <span>// A-Frame / Three.js<br>AFRAME.registerComponent('nexus-3d',{<br>&nbsp;&nbsp;init:function(){<br>&nbsp;&nbsp;&nbsp;&nbsp;this.el.setAttribute('color','#8a2be2')}})</span>
+          <div class="cat-title"><i class="fas fa-vr-cardboard"></i> AR/VR & 3D</div>
+          <div class="snippet-list">
+            <div class="code-snippet"><span style="color:#b77aef;">// A-Frame component</span><br>AFRAME.registerComponent('nexus-3d', {<br>  init: function() { this.el.setAttribute('color', '#8a2be2'); }<br>});</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Three.js cena básica</span><br>const scene = new THREE.Scene();<br>const camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);<br>const renderer = new THREE.WebGLRenderer();</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Cubo rotativo Three.js</span><br>const geometry = new THREE.BoxGeometry();<br>const material = new THREE.MeshStandardMaterial({color:0x8a2be2});<br>const cube = new THREE.Mesh(geometry, material); scene.add(cube);</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Realidade aumentada (AR.js)</span><br>&lt;a-scene embedded arjs&gt;<br>  &lt;a-box position='0 0 -2' color='purple'&gt;&lt;/a-box&gt;<br>&lt;/a-scene&gt;</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Iluminação Three.js</span><br>const light = new THREE.PointLight(0xffffff, 1, 100);<br>light.position.set(10,10,10); scene.add(light);</div>
+            <div class="code-snippet"><span style="color:#b77aef;">// Carregar modelo 3D (glTF)</span><br>const loader = new THREE.GLTFLoader();<br>loader.load('model.glb', (gltf) => scene.add(gltf.scene));</div>
           </div>
-          <a href="#" class="btn-nexus">código completo</a>
+          <a href="#" class="btn-nexus"><i class="fas fa-download"></i> ver todos (6+ códigos)</a>
         </div>
       </div>
     </section>
 
-    <!-- ========== SEÇÃO HIPER-MÍDIA: VÍDEO, GIF, FOTOS 3D ========== -->
-    <section style="margin-top: 6rem;">
-      <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 3rem; text-shadow: 0 0 16px #a44eff;">
-        <i class="fas fa-camera-retro"></i> LAB 3D •  VÍDEOS & GIFS
-      </h2>
-
-      <div class="media-showcase">
-        <!-- VÍDEO EMBUTIDO (YOUTUBE - coding futuristico) -->
-        <div class="video-glitch">
-          <iframe src="https://www.youtube.com/embed/Bt0oSzj8Q8U?autoplay=1&mute=1&loop=1&playlist=Bt0oSzj8Q8U&controls=0&showinfo=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-
-        <!-- GIF ANIMADO (CYBERPUNK / CÓDIGO) -->
-        <div>
-          <img class="gif-cyber" src="https://media3.giphy.com/media/l0MYt5jH6gkTWm8qo/giphy.gif?cid=ecf05e473y7dk2py2dwf5u5wy6f62me2vsvsj9lsk6zlwts9&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="hacking gif" style="width: 100%; max-width: 380px;">
-          <p style="text-align: center; color: #b77aef; margin-top: 8px;"><i class="fas fa-film"></i> GIF animado · código em ação</p>
-        </div>
-
-        <!-- SEGUNDO ELEMENTO 3D: FOTO GIRATÓRIA (FLIP CARD 3D) -->
-        <div class="flip-3d-container">
-          <div class="flip-3d">
-            <div class="flip-face flip-front">
-              <img src="https://picsum.photos/id/1045/300/300" alt="3d flip front" style="width:100%; height:100%; object-fit: cover; border-radius: 28px;">
-            </div>
-            <div class="flip-face flip-back" style="background: #1a0b2e; border: 3px solid #b77aef; flex-direction: column; color: white;">
-              <i class="fas fa-crown" style="font-size: 3rem; color: #ffb703;"></i>
-              <h3 style="margin-top: 1rem;">NexusCode</h3>
-              <p style="padding: 0 1rem;">biblioteca infinita</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MAIS UMA AMOSTRA: CÓDIGO AO VIVO (SIMULAÇÃO) -->
-    <section style="margin-top: 5rem; background: rgba(48, 9, 70, 0.4); border-radius: 48px; padding: 2.5rem; border: 1px solid #9a4dff; box-shadow: 0 0 70px #3c096c;">
-      <div style="display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;">
-        <div style="flex:1;">
-          <h3 style="font-size: 2rem; "><span style="color: #e5c3ff;">⟦ NEXUS AI SNIPPET ⟧</span></h3>
-          <div style="background: #080012; padding: 1.8rem; border-radius: 24px; border: 1px solid #bf79ff; margin-top: 1rem;">
+    <!-- SEÇÃO DESTAQUE: CÓDIGO EM FOCO (OPCIONAL) -->
+    <section style="margin-top: 5rem; background: rgba(48, 9, 70, 0.4); border-radius: 48px; padding: 2rem; border: 1px solid #9a4dff; box-shadow: 0 0 70px #3c096c;">
+      <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="flex: 1;">
+          <h3 style="font-size: 2rem;"><span style="color: #e5c3ff;">⟦ CÓDIGO EM DESTAQUE ⟧</span></h3>
+          <div style="background: #080012; padding: 1.5rem; border-radius: 24px; border: 1px solid #bf79ff; margin-top: 1rem;">
             <pre style="color: #f0d5ff; font-size: 0.9rem; font-family: monospace;">
-# CÓDIGO COMPLETO PARA IA GENERATIVA
-from transformers import pipeline
-gerador = pipeline('text-generation', model='gpt2')
-output = gerador("NexusCodes cria", max_length=50)
-print(output)</pre>
+# Código completo: assistente IA (Python)
+import openai
+openai.api_key = "sua-chave"
+response = openai.ChatCompletion.create(
+  model="gpt-3.5-turbo",
+  messages=[{"role": "user", "content": "Crie um jogo em Python"}]
+)
+print(response.choices[0].message.content)</pre>
           </div>
         </div>
         <div style="flex:1; text-align: center;">
           <i class="fas fa-microchip" style="font-size: 5rem; color: #b77aef; text-shadow: 0 0 20px;"></i>
-          <p style="color: #d6b3ff;">mais de 1500 códigos disponíveis</p>
+          <p style="color: #d6b3ff;">mais de 1500 códigos disponíveis no total</p>
           <div style="display: flex; gap: 1rem; justify-content: center;">
             <span style="background: #4b0082; padding: 0.6rem 1.5rem; border-radius: 40px;">IA</span>
             <span style="background: #4b0082; padding: 0.6rem 1.5rem; border-radius: 40px;">Games</span>
@@ -532,13 +478,12 @@ print(output)</pre>
 
     <!-- ASSINATURA ESTÉTICA -->
     <div style="text-align: center; margin-top: 2rem; opacity: 0.6; font-size: 0.8rem; letter-spacing: 3px; color: #a56bc0;">
-      <i class="fas fa-bolt"></i>   ROTATING 3D PHOTOS · VÍDEO · GIFs   <i class="fas fa-bolt"></i>
+      <i class="fas fa-bolt"></i>   36 CÓDIGOS FUNCIONAIS DISPONÍVEIS   <i class="fas fa-bolt"></i>
     </div>
   </div> <!-- fim container -->
 
-  <!-- PEQUENO SCRIPT PARA EFEITOS EXTRAS (GLITCH, ETC) -->
+  <!-- PEQUENO SCRIPT PARA EFEITOS EXTRAS -->
   <script>
-    // efeito sutil de brilho no logo e rotação extra - puramente cosmético
     (function() {
       const logos = document.querySelectorAll('.logo-text, .logo-icon');
       setInterval(() => {
@@ -550,10 +495,7 @@ print(output)</pre>
         logos.forEach(el => el.style.textShadow = '0 0 20px #8a2be2, 0 0 40px #4b0082');
       }, 200);
     })();
-
-    // pausar rotação do cubo ao passar o mouse, já feito no css, mas vamos deixar dinâmico.
-    console.log('NexusCodes · 3D roxo ativo');
+    console.log('NexusCodes · 36 códigos funcionais carregados');
   </script>
-  <!-- Créditos das imagens: Picsum, Giphy, YouTube -->
 </body>
 </html>
