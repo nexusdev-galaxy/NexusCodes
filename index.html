@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://images.unsplash.com data:; script-src 'self' 'unsafe-inline'; connect-src 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  <title>NexusCodes · Repositório Premium de Código</title>
+  <meta name="description" content="NexusCodes - Mais de 36 códigos completos com efeito de digitação dinâmico. IA, Jogos, Apps, Backend e muito mais.">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="NexusCodes - Repositório Premium">
+  <meta property="og:description" content="36+ códigos completos com animação de digitação interativa">
+  <meta property="og:type" content="website">
+  
+  <!-- Fonts com fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+  <style>
+    /* ========== CSS VARIABLES ========== */
+    :root {
+      --color-bg: #000000;
+      --color-primary: #6a0dad;
+      --color-secondary: #b77aef;
+      --color-accent: #c084fc;
+      --color-text: #f0eaff;
+      --color-text-dim: #c7b3ff;
+      --color-dark: #0c0016;
+      --color-glow: rgba(138, 43, 226, 0.7);
+      --border-radius: 32px;
+      --transition: 0.25s ease;
+    }
+
+    /* ========== RESET & BASE ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      background-image: 
+        radial-gradient(circle at 15% 30%, rgba(106, 13, 173, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 85% 70%, rgba(138, 43, 226, 0.12) 0%, transparent 35%),
+        linear-gradient(145deg, #030004 0%, #0a0a0f 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--color-text);
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Respeitar preferências de movimento */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ========== CANVAS & BACKGROUND ========== */
+    #stars-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="60" fill="none"/><path d="M30 5 L55 30 L30 55 L5 30 Z" stroke="rgba(128,0,255,0.08)" stroke-width="0.6" fill="none"/></svg>');
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ========== SCROLLBAR ========== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0b0b0f; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: 12px;
+      box-shadow: inset 0 0 6px var(--color-accent);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #9b4dff; }
+
+    /* ========== LAYOUT ========== */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ========== LOGO ========== */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .logo-icon {
+      background: linear-gradient(145deg, var(--color-accent), #4a1d6d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      filter: drop-shadow(0 0 8px var(--color-glow));
+    }
+
+    .logo-text {
+      background: linear-gradient(145deg, #f0eaff, #d9b3ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .logo-bracket {
+      color: var(--color-secondary);
+      font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+      font-weight: 300;
+    }
+
+    /* ========== NAVIGATION ========== */
+    nav {
+      display: flex;
+      gap: 2rem;
+      color: var(--color-text-dim);
+      font-weight: 500;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      padding: 0.3rem 0;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    nav a:hover,
+    nav a:focus {
+      color: var(--color-text);
+      border-bottom-color: var(--color-secondary);
+    }
+
+    nav a[aria-current="page"] {
+      border-bottom-color: var(--color-secondary);
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-nexus {
+      background: linear-gradient(165deg, #3c096c, #240046);
+      border: 1px solid var(--color-secondary);
+      color: #f1e5ff;
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      font-size: 0.8rem;
+      transition: var(--transition);
+      box-shadow: 0 0 15px rgba(156, 39, 176, 0.4);
+      display: inline-block;
+      text-transform: uppercase;
+      margin-top: 0.8rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-nexus:hover,
+    .btn-nexus:focus {
+      background: #5a189a;
+      border-color: #e0b3ff;
+      box-shadow: 0 0 25px #b200ff;
+      transform: scale(1.05);
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    /* ========== CUBE 3D ========== */
+    .cube-container {
+      perspective: 1200px;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 30px;
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotate3d 120s infinite linear;
+      transition: transform 0.1s;
+    }
+
+    .cube:hover { animation-play-state: paused; }
+
+    .cube-face {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border: 3px solid rgba(170, 50, 255, 0.6);
+      box-shadow: 0 0 35px #a55aff inset, 0 0 40px var(--color-primary);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+
+    .cube-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+      transition: 0.3s;
+      loading: lazy;
+    }
+
+    .cube-face:hover img { transform: scale(1.1); opacity: 1; }
+
+    .front  { transform: rotateY(0deg) translateZ(100px); }
+    .back   { transform: rotateY(180deg) translateZ(100px); }
+    .right  { transform: rotateY(90deg) translateZ(100px); }
+    .left   { transform: rotateY(-90deg) translateZ(100px); }
+    .top    { transform: rotateX(90deg) translateZ(100px); }
+    .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+    @keyframes rotate3d {
+      0% { transform: rotateX(0deg) rotateY(0deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    /* ========== CARDS ========== */
+    .glass-card {
+      background: rgba(15, 5, 25, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(180, 130, 255, 0.25);
+      border-radius: var(--border-radius);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 0 1px rgba(168, 85, 247, 0.1) inset;
+      transition: var(--transition);
+    }
+
+    .glass-card:hover {
+      border-color: var(--color-secondary);
+      box-shadow: 0 20px 40px rgba(106, 13, 173, 0.5), 0 0 25px #9f4fdf;
+      background: rgba(25, 10, 40, 0.75);
+    }
+
+    /* ========== CATEGORY GRID ========== */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .category-card {
+      background: rgba(8, 0, 16, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid #4a1d6d;
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      transition: var(--transition);
+      box-shadow: 0 8px 0 #2d0040;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .category-card:hover {
+      border-color: #c27eff;
+      box-shadow: 0 0 30px #a142f4, 0 8px 0 #3e065f;
+    }
+
+    .cat-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: #e9d1ff;
+      border-bottom: 2px solid #8a2be2;
+      padding-bottom: 0.5rem;
+    }
+
+    /* ========== CODE SNIPPETS ========== */
+    .code-snippet {
+      background: var(--color-dark);
+      border-left: 6px solid var(--color-secondary);
+      border-radius: 16px;
+      padding: 0.8rem;
+      margin: 0.6rem 0;
+      font-family: 'Courier New', 'Consolas', monospace;
+      font-size: 0.8rem;
+      color: #e0c0ff;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 2px 8px #000;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--color-primary);
+      line-height: 1.4;
+      min-height: 80px;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .code-snippet::after {
+      content: attr(data-language);
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(106, 13, 173, 0.8);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .snippet-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-secondary) #1a0033;
+    }
+
+    .snippet-list::-webkit-scrollbar { width: 5px; }
+    .snippet-list::-webkit-scrollbar-track { background: #1a0033; }
+    .snippet-list::-webkit-scrollbar-thumb {
+      background: var(--color-secondary);
+      border-radius: 10px;
+    }
+
+    /* ========== UTILITIES ========== */
+    .badge {
+      background: #2d0a44;
+      padding: 0.4rem 1.8rem;
+      border-radius: 60px;
+      color: #f0d5ff;
+      border: 1px solid var(--color-secondary);
+      box-shadow: 0 0 15px purple;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      background: var(--color-primary);
+      padding: 0.2rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer-nexus {
+      margin-top: 5rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--color-primary);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      color: var(--color-text-dim);
+    }
+
+    .footer-nexus a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-nexus a:hover { color: var(--color-text); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .container { padding: 1.5rem; }
+      .category-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    }
+
+    @media (max-width: 768px) {
+      nav { gap: 1rem; font-size: 0.9rem; }
+      .cube-container { width: 160px; height: 160px; }
+      .cube-face { width: 160px; height: 160px; }
+      .front, .back { transform: rotateY(0deg) translateZ(80px); transform: rotateY(180deg) translateZ(80px); }
+      .right, .left { transform: rotateY(90deg) translateZ(80px); transform: rotateY(-90deg) translateZ(80px); }
+      .top, .bottom { transform: rotateX(90deg) translateZ(80px); transform: rotateX(-90deg) translateZ(80px); }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 1rem; }
+      .logo { font-size: 1.5rem; letter-spacing: 2px; }
+      .category-grid { gap: 1.5rem; }
+    }
+
+    /* ========== ACESSIBILIDADE ========== */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Focus visível para navegação por teclado */
+    *:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Canvas para efeito de estrelas -->
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+  <div class="container">
+    <!-- ========== HEADER ========== -->
+    <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 2rem; gap: 1rem;">
+      <div class="logo" role="banner">
+        <span class="logo-icon" aria-hidden="true"><i class="fas fa-code"></i></span>
+        <span class="logo-bracket" aria-hidden="true">{</span>
+        <span class="logo-text">NexusCodes</span>
+        <span class="logo-bracket" aria-hidden="true">}</span>
+      </div>
+      <nav role="navigation" aria-label="Navegação principal">
+        <a href="#inicio" aria-current="page">Início</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#codigos">Códigos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section id="inicio" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
+      <span class="badge">
+        <i class="fas fa-crown" style="color: #ffd966;" aria-hidden="true"></i> repositório premium
+      </span>
+      <h1 style="font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800; background: linear-gradient(145deg, #f5e6ff, #ca9eff); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.5rem;">
+        NEXUS<span style="color: var(--color-accent);">//</span>CODES
+      </h1>
+      <p style="font-size: clamp(1rem, 2.5vw, 1.2rem); color: #d9c0ff; max-width: 700px; margin-bottom: 30px;">
+        <i class="fas fa-bolt" style="color: #bb86fc;" aria-hidden="true"></i> Mais de 36 códigos completos que se escrevem conforme você rola a página.
+      </p>
+
+      <!-- CUBO 3D -->
+      <div class="cube-container" role="img" aria-label="Cubo 3D rotativo com imagens de galáxias">
+        <div class="cube">
+          <div class="cube-face front"><img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&q=80" alt="Galáxia espiral roxa" loading="lazy"></div>
+          <div class="cube-face back"><img src="https://images.unsplash.com/photo-1543722530-d2c3201371e5?w=400&q=80" alt="Nebulosa colorida" loading="lazy"></div>
+          <div class="cube-face left"><img src="https://images.unsplash.com/photo-1506703719100-f0b3c5f4fb6b?w=400&q=80" alt="Campo estelar" loading="lazy"></div>
+          <div class="cube-face right"><img src="https://images.unsplash.com/photo-1419242902214-272b7f4ee9ac?w=400&q=80" alt="Via Láctea" loading="lazy"></div>
+          <div class="cube-face top"><img src="https://images.unsplash.com/photo-1506701160839-34cfdecaf53c?w=400&q=80" alt="Galáxia distante" loading="lazy"></div>
+          <div class="cube-face bottom"><img src="https://images.unsplash.com/photo-1464802686167-b939a6910659?w=400&q=80" alt="Espaço profundo" loading="lazy"></div>
+        </div>
+      </div>
+      <span style="margin-top: 8px; color: var(--color-secondary); font-size: 0.9rem;">
+        <i class="fas fa-sync-alt" aria-hidden="true"></i> rotação lenta (120s) · pause no hover
+      </span>
+    </section>
+
+    <!-- ========== CATEGORIAS ========== -->
+    <section id="categorias" style="margin-top: 60px;">
+      <div style="display: flex; gap: 15px; align-items: baseline; margin-bottom: 30px; flex-wrap: wrap;">
+        <h2 style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700; color: #f3e6ff;">
+          <i class="fas fa-cubes" aria-hidden="true"></i> CATEGORIAS
+        </h2>
+        <span class="tag">36 códigos dinâmicos</span>
+      </div>
+
+      <div class="category-grid">
+        <!-- CARD 1: IA -->
+        <article class="category-card glass-card">
+          <h3 class="cat-title">
+            <i class="fas fa-brain" style="color: #d4a5ff;" aria-hidden="true"></i> INTELIGÊNCIA ARTIFICIAL
+          </h3>
+          <div class="snippet-list" id="cat-ia">
+            <div class="code-snippet" data-language="Python" data-fulltext="class NexusNet(nn.Module):\n  def __init__(self):\n    super().__init__()\n    self.fc1 = nn.Linear(784,256)\n    self.fc2 = nn.Linear(256,10)\n  def forward(self,x):\n    x = torch.relu(self.fc1(x))\n    return self.fc2(x)"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="for epoch in range(10):\n  for data, target in loader:\n    opt.zero_grad()\n    loss = criterion(model(data), target)\n    loss.backward(); opt.step()"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="from transformers import pipeline\nchat = pipeline('conversational', model='microsoft/DialoGPT-medium')\nreply = chat('Olá, NexusCodes')"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="model = resnet18(pretrained=True)\nmodel.eval()\nwith torch.no_grad():\n  pred = model(img_tensor).argmax()"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="from sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="from sklearn.cluster import KMeans\nkmeans = KMeans(n_clusters=3)\nkmeans.fit(X)\nlabels = kmeans.labels_"></div>
+          </div>
+          <button class="btn-nexus" onclick="alert('Funcionalidade em desenvolvimento')">
+            <i class="fas fa-download" aria-hidden="true"></i> ver todos (12+ códigos)
+          </button>
+        </article>
+
+        <!-- CARD 2: JOGOS -->
+        <article class="category-card glass-card">
+          <h3 class="cat-title">
+            <i class="fas fa-gamepad" style="color: #d4a5ff;" aria-hidden="true"></i> JOGOS COMPLETOS
+          </h3>
+          <div class="snippet-list" id="cat-jogos">
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="class Player {\n  constructor(x,y){ this.x=x; this.y=y; this.vy=0; }\n  update() { this.y += this.vy; }\n  jump() { this.vy = -12; }\n}"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="function collide(r1, r2) {\n  return !(r2.x > r1.x+r1.w || r2.x+r2.w < r1.x ||\n           r2.y > r1.y+r1.h || r2.y+r2.h < r1.y);\n}"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="this.map = this.make.tilemap({ key:'map' });\nconst tileset = this.map.addTilesetImage('tiles');\nthis.map.createLayer('ground', tileset);"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="this.anims.create({\n  key: 'run', frames: this.anims.generateFrameNumbers('player', {start:0,end:3}), frameRate:10, repeat:-1\n});"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="function spawnEnemy() {\n  enemies.push(new Enemy(Math.random()*800,0));\n} setInterval(spawnEnemy, 2000);"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="let score = 0;\nfunction collectCoin() { score += 10; updateScore(); }"></div>
+          </div>
+          <button class="btn-nexus" onclick="alert('Funcionalidade em desenvolvimento')">
+            <i class="fas fa-download" aria-hidden="true"></i> ver todos (10+ códigos)
+          </button>
+        </article>
+
+        <!-- CARD 3: APLICATIVOS -->
+        <article class="category-card glass-card">
+          <h3 class="cat-title">
+            <i class="fas fa-mobile-alt" style="color: #d4a5ff;" aria-hidden="true"></i> APLICATIVOS
+          </h3>
+          <div class="snippet-list" id="cat-apps">
+            <div class="code-snippet" data-language="React" data-fulltext="export default function App() {\n  const [data, setData] = useState(null);\n  useEffect(() => { fetch('api').then(setData); }, []);\n  return <View><Text>{data}</Text></View>;\n}"></div>
+            <div class="code-snippet" data-language="Redux" data-fulltext="const userSlice = createSlice({\n  name: 'user', initialState: {},\n  reducers: { setUser: (state, action) => action.payload }\n});"></div>
+            <div class="code-snippet" data-language="SQL" data-fulltext="const db = SQLite.openDatabase('test.db');\ndb.transaction(tx => tx.executeSql('CREATE TABLE items (id, name)'));"></div>
+            <div class="code-snippet" data-language="React" data-fulltext="<NavigationContainer>\n  <Stack.Navigator><Stack.Screen name='Home' component={Home} /></Stack.Navigator>\n</NavigationContainer>"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="const loadData = async () => {\n  const res = await fetch('https://api.nexus.com');\n  setData(await res.json());\n};"></div>
+            <div class="code-snippet" data-language="JavaScript" data-fulltext="await AsyncStorage.setItem('user', JSON.stringify(user));\nconst user = JSON.parse(await AsyncStorage.getItem('user'));"></div>
+          </div>
+          <button class="btn-nexus" onclick="alert('Funcionalidade em desenvolvimento')">
+            <i class="fas fa-download" aria-hidden="true"></i> ver todos (8+ códigos)
+          </button>
+        </article>
+
+        <!-- CARD 4: BACKEND -->
+        <article class="category-card glass-card">
+          <h3 class="cat-title">
+            <i class="fas fa-database" aria-hidden="true"></i> BACKEND & API
+          </h3>
+          <div class="snippet-list" id="cat-backend">
+            <div class="code-snippet" data-language="Python" data-fulltext="@app.route('/nexus')\ndef nexus(): return jsonify({'codes':42})\nif __name__ == '__main__': app.run()"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="token = jwt.encode({'user': user}, SECRET, algorithm='HS256')\ndecoded = jwt.decode(token, SECRET, algorithms=['HS256'])"></div>
+            <div class="code-snippet" data-language="Node.js" data-fulltext="app.get('/api', (req, res) => {\n  res.json({ message: 'Nexus' });\n});"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="class User(db.Model):\n  id = db.Column(db.Integer, primary_key)\n  name = db.Column(db.String(80))"></div>
+            <div class="code-snippet" data-language="FastAPI" data-fulltext="@app.get('/items/{id}')\nasync def read_item(id: int): return {'id': id}"></div>
+            <div class="code-snippet" data-language="GraphQL" data-fulltext="type Query { codes: [Code] }\ntype Code { id: ID!, language: String }"></div>
+          </div>
+          <button class="btn-nexus" onclick="alert('Funcionalidade em desenvolvimento')">
+            <i class="fas fa-download" aria-hidden="true"></i> ver todos (9+ códigos)
+          </button>
+        </article>
+
+        <!-- CARD 5: AUTOMAÇÃO -->
+        <article class="category-card glass-card">
+          <h3 class="cat-title">
+            <i class="fas fa-robot" aria-hidden="true"></i> AUTOMAÇÃO
+          </h3>
+          <div class="snippet-list" id="cat-automacao">
+            <div class="code-snippet" data-language="Python" data-fulltext="import pyautogui, schedule\ndef job(): pyautogui.write('Nexus')\nschedule.every().day.at('10:00').do(job)"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="response = requests.get(url)\nsoup = BeautifulSoup(response.text, 'html.parser')\nlinks = soup.find_all('a')"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="driver = webdriver.Chrome()\ndriver.get('https://nexus.com')\nelement = driver.find_element(By.ID, 'search')\nelement.send_keys('códigos')"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="import os\nfor f in os.listdir('.'):\n  if f.endswith('.txt'): os.rename(f, f'backup_{f}')"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="import smtplib\nserver = smtplib.SMTP('smtp.gmail.com', 587)\nserver.login('user', 'pass')\nserver.sendmail('from', 'to', 'mensagem')"></div>
+            <div class="code-snippet" data-language="Python" data-fulltext="schedule.every(10).minutes.do(job)\nwhile True: schedule.run_pending(); time.sleep(1)"></div>
+          </div>
+          <button class="btn-nexus" onclick="alert('Funcionalidade em desenvolvimento')">
+            <i class="fas fa-download" aria-hidden="true"></i> ver todos (7+ códigos)
+          </button>
+        </article>
+
+        <!-- CARD 6: AR/VR -->
+        <article class="category-card glass-card">
+          <h3 class="cat-title">
+            <i class="fas fa-vr-cardboard" aria-hidden="true"></i> AR/VR & 3D
+          </h3>
+          <div class="snippet-list" id="cat-arvr">
+            <div class="code-snippet" data-language="A-Frame" data-fulltext="AFRAME.registerComponent('nexus-3d', {\n  init: function() { this.el.setAttribute('color', '#8a2be2'); }\n});"></div>
+            <div class="code-snippet" data-language="Three.js" data-fulltext="const scene = new THREE.Scene();\nconst camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);\nconst renderer = new THREE.WebGLRenderer();"></div>
+            <div class="code-snippet" data-language="Three.js" data-fulltext="const geometry = new THREE.BoxGeometry();\nconst material = new THREE.MeshStandardMaterial({color:0x8a2be2});\nconst cube = new THREE.Mesh(geometry, material); scene.add(cube);"></div>
+            <div class="code-snippet" data-language="HTML" data-fulltext="<a-scene embedded arjs>\n  <a-box position='0 0 -2' color='purple'></a-box>\n</a-scene>"></div>
+            <div class="code-snippet" data-language="Three.js" data-fulltext="const light = new THREE.PointLight(0xffffff, 1, 100);\nlight.position.set(10,10,10); scene.add(light);"></div>
+            <div class="code-snippet" data-language="Three.js" data-fulltext="const loader = new THREE.GLTFLoader();\nloader.load('model.glb', (gltf) => scene.add(gltf.scene));"></div>
+          </div>
+          <button class="btn-nexus" onclick="alert('Funcionalidade em desenvolvimento')">
+            <i class="fas fa-download" aria-hidden="true"></i> ver todos (6+ códigos)
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== CÓDIGO DESTAQUE ========== -->
+    <section id="codigos" style="margin-top: 5rem; background: rgba(48, 9, 70, 0.4); border-radius: 48px; padding: 2rem; border: 1px solid #9a4dff; box-shadow: 0 0 70px #3c096c;">
+      <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 280px;">
+          <h3 style="font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 1rem;">
+            <span style="color: #e5c3ff;">⟦ CÓDIGO EM DESTAQUE ⟧</span>
+          </h3>
+          <div style="background: #080012; padding: 1.5rem; border-radius: 24px; border: 1px solid #bf79ff;">
+            <pre style="color: #f0d5ff; font-size: clamp(0.7rem, 1.5vw, 0.9rem); font-family: monospace; overflow-x: auto; white-space: pre-wrap;"># ⚠️ ATENÇÃO: Nunca exponha chaves reais em código!
+# Este é apenas um exemplo educacional
+
+import openai
+
+# USE VARIÁVEIS DE AMBIENTE:
+# openai.api_key = os.getenv('OPENAI_KEY')
+
+response = openai.ChatCompletion.create(
+  model="gpt-3.5-turbo",
+  messages=[{"role": "user", "content": "Crie um jogo em Python"}]
+)
+print(response.choices[0].message.content)</pre>
+          </div>
+        </div>
+        <div style="flex:1; text-align: center; min-width: 200px;">
+          <i class="fas fa-microchip" style="font-size: clamp(3rem, 8vw, 5rem); color: var(--color-secondary);" aria-hidden="true"></i>
+          <p style="color: #d6b3ff; margin: 1rem 0;">mais de 1500 códigos disponíveis no total</p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <span class="tag">IA</span>
+            <span class="tag">Games</span>
+            <span class="tag">Apps</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="contato" class="footer-nexus">
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 800; display: flex; gap: 5px;">
+          <span style="color: var(--color-secondary);">{NexusCodes}</span>
+        </span>
+        <span style="color: #c69aff; margin-top: 8px;">© 2025 · códigos prontos, poder roxo</span>
+      </div>
+      <div style="display: flex; gap: 2rem; color: #e7d0ff; flex-wrap: wrap;">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github" aria-hidden="true"></i> NexusCodes
+        </a>
+        <a href="https://discord.com" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-discord" aria-hidden="true"></i> /nexuslab
+        </a>
+        <span><i class="fas fa-cube" aria-hidden="true"></i> 3D galaxy</span>
+      </div>
+    </footer>
+
+    <!-- ========== ASSINATURA ========== -->
+    <div style="text-align: center; margin-top: 2rem; opacity: 0.6; font-size: 0.8rem; letter-spacing: 3px; color: #a56bc0;">
+      <i class="fas fa-bolt" aria-hidden="true"></i> 36 CÓDIGOS COM EFEITO DE DIGITAÇÃO POR SCROLL <i class="fas fa-bolt" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // Respeita preferências de animação
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ========== CANVAS DE ESTRELAS ==========
+      const canvas = document.getElementById('stars-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height, stars = [], animationId;
+
+      function initStars() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        stars = [];
+        
+        const starCount = prefersReducedMotion ? 50 : 150;
+        for (let i = 0; i < starCount; i++) {
+          stars.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r: Math.random() * 2.5 + 1,
+            speed: prefersReducedMotion ? 0.05 : Math.random() * 0.5 + 0.1,
+            opacity: Math.random() * 0.8 + 0.2
+          });
+        }
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, width, height);
+        stars.forEach(s => {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 180, 255, ${s.opacity})`;
+          ctx.fill();
+          
+          s.y += s.speed * 0.2;
+          if (s.y > height) {
+            s.y = 0;
+            s.x = Math.random() * width;
+          }
+        });
+        animationId = requestAnimationFrame(drawStars);
+      }
+
+      // Debounce para resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          cancelAnimationFrame(animationId);
+          initStars();
+          drawStars();
+        }, 250);
+      });
+
+      initStars();
+      drawStars();
+
+      // ========== EFEITO DE DIGITAÇÃO POR SCROLL ==========
+      const snippets = document.querySelectorAll('.code-snippet');
+      let ticking = false;
+
+      function updateTypingEffect() {
+        const windowHeight = window.innerHeight;
+        
+        snippets.forEach(snippet => {
+          const rect = snippet.getBoundingClientRect();
+          const visibleHeight = Math.max(0, Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0));
+          const totalHeight = rect.height;
+          let ratio = totalHeight > 0 ? visibleHeight / totalHeight : 0;
+          ratio = Math.max(0, Math.min(1, ratio));
+
+          const fullText = snippet.dataset.fulltext || '';
+          const totalChars = fullText.length;
+          const charsToShow = Math.floor(ratio * totalChars);
+
+          snippet.textContent = fullText.substring(0, charsToShow);
+        });
+        
+        ticking = false;
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updateTypingEffect);
+        }
+      }
+
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', requestTick, { passive: true });
+      
+      // Inicialização
+      updateTypingEffect();
+
+      // ========== NAVEGAÇÃO SUAVE ==========
+      document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: prefersReducedMotion ? 'auto' : 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
